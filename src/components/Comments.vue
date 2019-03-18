@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
+      <h1>Posts in {{activePost}} Post</h1>
       <div class="comments-div">
-          <div class="comment" v-for="comment in comments">
+          <div class="comment" v-for="comment in postComments">
               <div v-bind:style="{ background: setBg(comment.postId)}">
                 <h3>{{comment.name}}</h3>
                 <h6>{{comment.email}}</h6>
@@ -16,17 +17,28 @@
 export default {
   name: 'Comments',
   props: {
-    msg: String,
+    activePost: {
+        required:true
+    }
   },
   data: function(){
       return{
-          comments: []
+          comments: [],
       };
   },
   created(){
       fetch('https://jsonplaceholder.typicode.com/comments')
       .then(response => response.json())
       .then(json => this.comments = json)
+  },
+  computed:{
+      postComments: function(){
+          return this.comments.filter(
+              function(c){
+                  return c.postId == this.activePost;
+              }, this
+          );
+      }
   },
   methods: {
     setBg: function (i) {
