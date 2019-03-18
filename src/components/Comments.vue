@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-      <h1>Posts in {{activePost}} Post</h1>
+      <h1>Comments in {{activePost}} Post</h1>
       <div class="comments-div">
           <div class="comment" v-for="comment in postComments">
               <div v-bind:style="{ background: setBg(comment.postId)}">
